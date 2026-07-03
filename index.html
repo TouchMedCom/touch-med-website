@@ -261,7 +261,7 @@ section{padding-block:var(--sec-pad)}
 .sec-sub{color:var(--ink-2);max-width:42rem;font-size:var(--text-base)}
 
 /* ===================== ABOUT ===================== */
-.about-grid{display:grid;gap:3rem;align-items:center}
+.about-grid{display:grid;gap:3rem;align-items:center;position:relative;z-index:1}
 @media(min-width:940px){.about-grid{grid-template-columns:1fr 1fr}}
 .about-visual{position:relative}
 .about-frame{
@@ -451,12 +451,109 @@ footer ul a:hover{color:#fff;padding-right:6px}
 @keyframes waPulse{0%,100%{box-shadow:0 14px 34px -8px rgba(37,211,102,.6),0 0 0 0 rgba(37,211,102,.45)}55%{box-shadow:0 14px 34px -8px rgba(37,211,102,.6),0 0 0 18px rgba(37,211,102,0)}}
 
 /* scroll progress bar */
-.progress{position:fixed;top:0;inset-inline:0;height:3.5px;z-index:80;background:transparent}
-.progress b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue-400),var(--accent));transition:width .1s linear;border-radius:0 3px 3px 0}
+.progress{position:fixed;top:0;inset-inline:0;height:4px;z-index:80;background:transparent}
+.progress b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue-400),var(--accent));transition:width .1s linear;border-radius:0 4px 4px 0;box-shadow:0 0 12px 1px rgba(63,122,218,.7)}
+
+/* ===================== PAGE LOADER ===================== */
+.loader{
+  position:fixed;inset:0;z-index:999;background:var(--hero-grad);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .7s var(--ease),visibility .7s var(--ease);
+}
+.loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-mark{width:84px;height:84px;position:relative}
+.loader-mark svg{width:100%;height:100%}
+.loader-ring{
+  position:absolute;inset:-14px;border-radius:50%;border:2.5px solid rgba(255,255,255,.18);
+  border-top-color:#fff;animation:loaderSpin 1s linear infinite;
+}
+@keyframes loaderSpin{to{transform:rotate(360deg)}}
+
+/* ===================== CUSTOM CURSOR GLOW (desktop only) ===================== */
+.cursor-glow{
+  position:fixed;top:0;left:0;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:5;
+  background:radial-gradient(circle,rgba(63,122,218,.16) 0%,rgba(63,122,218,0) 70%);
+  transform:translate(-50%,-50%);will-change:transform;opacity:0;transition:opacity .4s;
+}
+.cursor-glow.on{opacity:1}
+@media(hover:none),(pointer:coarse){.cursor-glow{display:none}}
+
+/* ===================== TEXT REVEAL (word cascade) ===================== */
+.tr-word{display:inline-block;overflow:hidden;vertical-align:top}
+.tr-word span{display:inline-block;transform:translateY(115%);transition:transform .85s var(--ease);}
+.sec-title.tr-ready .tr-word span,.hero h1.tr-ready .tr-word span{transform:translateY(115%)}
+.tr-in .tr-word span{transform:translateY(0) !important}
+
+/* ===================== CLIP-PATH WIPE REVEALS ===================== */
+.wipe{clip-path:inset(0 0 100% 0);opacity:0;transition:clip-path 1s var(--ease),opacity .5s ease}
+.wipe.in{clip-path:inset(0 0 0% 0);opacity:1}
+.wipe-l{clip-path:inset(0 100% 0 0);opacity:0;transition:clip-path 1s var(--ease),opacity .5s ease}
+.wipe-l.in{clip-path:inset(0 0% 0 0);opacity:1}
+
+/* ===================== MAGNETIC BUTTONS ===================== */
+@media(hover:hover) and (pointer:fine){
+  .magnetic{transition:transform .25s cubic-bezier(.2,.9,.3,1.4)}
+}
+
+/* ===================== 3D TILT CARDS ===================== */
+.tilt{transform-style:preserve-3d;will-change:transform}
+.tilt-inner{transform:translateZ(30px)}
+
+/* ===================== SHEEN SWEEP ON HOVER ===================== */
+.sheen{position:relative;overflow:hidden}
+.sheen::before{
+  content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(115deg,transparent 0%,rgba(255,255,255,.35) 50%,transparent 100%);
+  transform:skewX(-18deg);transition:left .85s cubic-bezier(.2,.7,.2,1);pointer-events:none;z-index:2;
+}
+.sheen:hover::before{left:130%}
+[data-theme="dark"] .sheen::before{background:linear-gradient(115deg,transparent 0%,rgba(255,255,255,.14) 50%,transparent 100%)}
+
+/* ===================== GLOWING STAT NUMBERS ===================== */
+.stat.counted b{animation:statGlow 1.2s ease}
+@keyframes statGlow{0%{text-shadow:0 0 0 rgba(255,255,255,0)}45%{text-shadow:0 0 18px rgba(255,255,255,.85)}100%{text-shadow:0 0 0 rgba(255,255,255,0)}}
+
+/* ===================== ANIMATED GRADIENT MESH BACKDROP ===================== */
+.mesh-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.mesh-bg span{
+  position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;
+  background:radial-gradient(circle,var(--blue-400),transparent 70%);
+  animation:meshFloat 16s ease-in-out infinite;
+}
+.mesh-bg span:nth-child(1){width:340px;height:340px;top:-8%;right:-6%;animation-duration:18s}
+.mesh-bg span:nth-child(2){width:260px;height:260px;bottom:-10%;left:-4%;animation-duration:14s;animation-delay:-4s;background:radial-gradient(circle,var(--accent),transparent 70%);opacity:.14}
+@keyframes meshFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,26px) scale(1.15)}}
+[data-theme="dark"] .mesh-bg span{opacity:.22}
+
+/* second reversed marquee row for depth */
+.marquee-2{background:transparent;padding:.6rem 0 0}
+.marquee-2 .marquee-track{animation-direction:reverse;animation-duration:32s;opacity:.55;filter:grayscale(.2)}
+
+/* nav shadow strengthening on scroll */
+.nav.scrolled{box-shadow:0 8px 30px -14px rgba(10,30,70,.35)}
+
+/* ripple */
+.ripple{position:relative;overflow:hidden}
+.ripple-fx{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rippleAnim .65s ease-out forwards;pointer-events:none}
+@keyframes rippleAnim{to{transform:scale(2.6);opacity:0}}
+
+@media (prefers-reduced-motion:reduce){
+  .loader{display:none}
+  .cursor-glow{display:none}
+  .tr-word span{transition:none;transform:none}
+  .wipe,.wipe-l{clip-path:none;opacity:1}
+  .mesh-bg span{animation:none}
+}
 </style>
 
-<!-- scroll progress -->
-<div class="progress"><b id="pbar"></b></div>
+<!-- ===================== PAGE LOADER ===================== -->
+<div class="loader" id="loader">
+  <div class="loader-mark">
+    <div class="loader-ring"></div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4.5-3.6-8-6.8-8-10.5C4 7 6 5 8.5 5c1.5 0 2.7.7 3.5 1.8C12.8 5.7 14 5 15.5 5 18 5 20 7 20 10.5c0 3.7-3.5 6.9-8 10.5z"/><path d="M5.5 11h3l1.5-3 2 5 1.5-2h4"/></svg>
+  </div>
+</div>
+<div class="cursor-glow" id="cursorGlow"></div>
 
 <!-- ===================== NAV ===================== -->
 <header class="nav">
@@ -543,9 +640,19 @@ footer ul a:hover{color:#fff;padding-right:6px}
     <span><i class="plus">＋</i> توصيل لجميع المحافظات</span>
   </div>
 </div>
+<div class="marquee marquee-2" aria-hidden="true">
+  <div class="marquee-track" id="marquee2">
+    <span>🩺 تاتش ميد</span>
+    <span>🦴 نماذج تشريحية دقيقة</span>
+    <span>💚 خدمة موثوقة</span>
+    <span>📍 القصر العيني، القاهرة</span>
+    <span>✅ صور حقيقية 100%</span>
+  </div>
+</div>
 
 <!-- ===================== ABOUT ===================== -->
-<section id="about">
+<section id="about" style="position:relative">
+  <div class="mesh-bg"><span></span><span></span></div>
   <div class="container about-grid">
     <div class="rv-r">
       <span class="sec-tag">🏥 من نحن</span>
@@ -837,6 +944,105 @@ footer ul a:hover{color:#fff;padding-right:6px}
 </a>
 
 <script>
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isFinePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+/* ============ WORD-CASCADE TEXT REVEAL ENGINE ============ */
+function wrapWords(node){
+  Array.from(node.childNodes).forEach(child=>{
+    if(child.nodeType===3){
+      const parts=child.textContent.split(/(\s+)/);
+      const frag=document.createDocumentFragment();
+      parts.forEach(w=>{
+        if(w.trim()===''){ frag.appendChild(document.createTextNode(w)); }
+        else{
+          const outer=document.createElement('span'); outer.className='tr-word';
+          const inner=document.createElement('span'); inner.textContent=w;
+          outer.appendChild(inner); frag.appendChild(outer);
+        }
+      });
+      child.replaceWith(frag);
+    } else if(child.nodeType===1){ wrapWords(child); }
+  });
+}
+function primeTextReveal(el){
+  if(el.dataset.trReady || prefersReduced) return;
+  el.dataset.trReady='1';
+  wrapWords(el);
+  el.querySelectorAll('.tr-word').forEach((w,i)=>{ w.firstElementChild.style.transitionDelay=(i*45)+'ms'; });
+}
+function playTextReveal(el){ el.classList.add('tr-in'); }
+
+document.querySelectorAll('.sec-title').forEach(primeTextReveal);
+const heroH1=document.querySelector('.hero h1');
+if(heroH1) primeTextReveal(heroH1);
+
+/* ============ PAGE LOADER ============ */
+const loader=document.getElementById('loader');
+function hideLoader(){
+  loader.classList.add('hide');
+  if(heroH1) requestAnimationFrame(()=>requestAnimationFrame(()=>playTextReveal(heroH1)));
+}
+if(document.readyState==='complete') setTimeout(hideLoader,350);
+else window.addEventListener('load',()=>setTimeout(hideLoader,350));
+setTimeout(hideLoader,2200); // safety fallback
+
+/* ============ CUSTOM CURSOR GLOW (desktop only) ============ */
+if(isFinePointer && !prefersReduced){
+  const glow=document.getElementById('cursorGlow');
+  let gx=0,gy=0,cx=0,cy=0,active=false;
+  addEventListener('mousemove',e=>{ gx=e.clientX; gy=e.clientY; if(!active){active=true; glow.classList.add('on');} });
+  (function loop(){ cx+=(gx-cx)*.18; cy+=(gy-cy)*.18; glow.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`; requestAnimationFrame(loop); })();
+}
+
+/* ============ MAGNETIC BUTTONS + RIPPLE (desktop) ============ */
+document.querySelectorAll('.btn,.cta-nav,.pf-btn').forEach(btn=>{
+  btn.classList.add('magnetic','ripple');
+  if(isFinePointer && !prefersReduced){
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect();
+      const x=(e.clientX-r.left-r.width/2)*.22, y=(e.clientY-r.top-r.height/2)*.28;
+      btn.style.transform=`translate(${x}px,${y}px)`;
+    });
+    btn.addEventListener('mouseleave',()=>{ btn.style.transform=''; });
+  }
+  btn.addEventListener('click',function(e){
+    const r=btn.getBoundingClientRect();
+    const d=Math.max(r.width,r.height);
+    const fx=document.createElement('span');
+    fx.className='ripple-fx';
+    fx.style.width=fx.style.height=d+'px';
+    fx.style.left=(e.clientX-r.left-d/2)+'px';
+    fx.style.top=(e.clientY-r.top-d/2)+'px';
+    btn.appendChild(fx);
+    setTimeout(()=>fx.remove(),650);
+  });
+});
+
+/* ============ 3D TILT ON CARDS (desktop) ============ */
+if(isFinePointer && !prefersReduced){
+  document.querySelectorAll('.cat-card,.why-card,.p-card,.t-card').forEach(card=>{
+    card.addEventListener('mouseenter',()=>{ card.style.transition='transform .12s ease-out'; });
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      const rx=(py-.5)*-7, ry=(px-.5)*7;
+      card.style.transform=`perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.transition='transform .6s cubic-bezier(.22,1,.36,1)';
+      card.style.transform='';
+    });
+  });
+}
+
+/* ============ SHEEN SWEEP on key surfaces ============ */
+document.querySelectorAll('.cat-card,.why-card,.btn-light,.btn-wa,.p-card,.about-frame,.map-card').forEach(el=>el.classList.add('sheen'));
+
+/* ============ NAV SHADOW ON SCROLL ============ */
+const navEl=document.querySelector('.nav');
+addEventListener('scroll',()=>{ navEl.classList.toggle('scrolled', scrollY>10); },{passive:true});
+
 /* ============ THEME TOGGLE (with graceful persistence) ============ */
 const root=document.documentElement, tBtn=document.getElementById('themeBtn');
 function setTheme(t){
@@ -864,9 +1070,15 @@ addEventListener('resize',()=>{ if(innerWidth>=860) closeMenu(); });
 
 /* ============ SCROLL REVEAL ============ */
 const io=new IntersectionObserver(entries=>{
-  entries.forEach(en=>{ if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target);} });
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      en.target.classList.add('in');
+      if(en.target.classList.contains('sec-title')) playTextReveal(en.target);
+      io.unobserve(en.target);
+    }
+  });
 },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.rv,.rv-r,.rv-l,.rv-scale').forEach(el=>io.observe(el));
+document.querySelectorAll('.rv,.rv-r,.rv-l,.rv-scale,.wipe,.wipe-l,.sec-title').forEach(el=>io.observe(el));
 
 /* ============ COUNTERS ============ */
 const cio=new IntersectionObserver(entries=>{
@@ -876,7 +1088,8 @@ const cio=new IntersectionObserver(entries=>{
     (function tick(now){
       const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3);
       el.textContent=Math.round(target*e);
-      if(p<1)requestAnimationFrame(tick);
+      if(p<1){requestAnimationFrame(tick);}
+      else{ el.closest('.stat').classList.add('counted'); }
     })(t0);
     cio.unobserve(el);
   });
@@ -968,13 +1181,31 @@ addEventListener('scroll',()=>{
 /* ============ MARQUEE: duplicate content for seamless loop ============ */
 const mq=document.getElementById('marquee');
 mq.innerHTML+=mq.innerHTML;
+const mq2=document.getElementById('marquee2');
+if(mq2) mq2.innerHTML+=mq2.innerHTML+mq2.innerHTML;
 
-/* ============ SUBTLE PARALLAX ON HERO BLOBS ============ */
-addEventListener('scroll',()=>{
-  const y=scrollY;
-  document.querySelectorAll('.blob-1').forEach(b=>b.style.transform=`translateY(${y*.18}px)`);
-  document.querySelectorAll('.blob-2').forEach(b=>b.style.transform=`translateY(${y*-.12}px)`);
-},{passive:true});
+/* ============ RICH HERO PARALLAX ON SCROLL (rAF-throttled) ============ */
+(function(){
+  const heroEl=document.querySelector('.hero');
+  if(!heroEl) return;
+  const blob1=document.querySelector('.blob-1'), blob2=document.querySelector('.blob-2');
+  const heroInner=document.querySelector('.hero-grid');
+  const heroH=()=>heroEl.offsetHeight;
+  let ticking=false;
+  function apply(){
+    const y=scrollY, h=heroH();
+    const p=Math.min(Math.max(y/h,0),1); // 0 → top of hero, 1 → fully scrolled past
+    if(blob1) blob1.style.transform=`translateY(${y*.18}px)`;
+    if(blob2) blob2.style.transform=`translateY(${y*-.12}px)`;
+    if(!prefersReduced && heroInner){
+      heroInner.style.transform=`translateY(${p*40}px) scale(${1-p*.06})`;
+      heroInner.style.opacity=String(1-p*1.1);
+    }
+    ticking=false;
+  }
+  addEventListener('scroll',()=>{ if(!ticking){ requestAnimationFrame(apply); ticking=true; } },{passive:true});
+  apply();
+})();
 </script>
 </body>
 </html>
