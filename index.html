@@ -71,12 +71,12 @@
 
 /* ===================== BASE ===================== */
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%}
+html{scroll-behavior:smooth;overflow-x:clip;max-width:100%}
 body{
   font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
   background:var(--bg);color:var(--ink);
   font-size:var(--text-base);line-height:1.85;
-  overflow-x:hidden;
+  overflow-x:clip;
   transition:background .45s ease,color .45s ease;
 }
 h1,h2,h3,h4,.display{font-family:'Alexandria',sans-serif;line-height:1.35}
@@ -109,8 +109,8 @@ a{color:inherit;text-decoration:none}
 @keyframes navDrop{to{transform:none}}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;gap:.8rem;min-width:0}
 .brand{display:flex;align-items:center;gap:.6rem;font-family:'Alexandria';font-weight:800;font-size:1.05rem;min-width:0;flex:1 1 auto;overflow:hidden}
-.brand .logo-mark{width:42px;height:42px;border-radius:12px;background:var(--hero-grad);display:grid;place-items:center;box-shadow:0 8px 20px -6px var(--glow);flex:0 0 42px}
-.brand .logo-mark svg{width:26px;height:26px}
+.brand .logo-mark{width:42px;height:42px;border-radius:12px;background:var(--hero-grad);display:grid;place-items:center;box-shadow:0 8px 20px -6px var(--glow);flex:0 0 42px;will-change:transform}
+.brand .logo-mark svg{width:26px;height:26px;will-change:transform}
 .brand .brand-text{min-width:0;overflow:hidden}
 .brand small{display:none;font-family:'IBM Plex Sans Arabic';font-weight:400;font-size:.62rem;color:var(--ink-3);letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav-actions{flex:0 0 auto}
@@ -1145,9 +1145,25 @@ if(isFinePointer && !prefersReduced){
 /* ============ SHEEN SWEEP on key surfaces ============ */
 document.querySelectorAll('.cat-card,.why-card,.btn-light,.btn-wa,.p-card,.about-frame,.map-card').forEach(el=>el.classList.add('sheen'));
 
-/* ============ NAV SHADOW ON SCROLL ============ */
+/* ============ NAV SHADOW + ANIMATED LOGO ON SCROLL ============ */
 const navEl=document.querySelector('.nav');
-addEventListener('scroll',()=>{ navEl.classList.toggle('scrolled', scrollY>10); },{passive:true});
+const logoMark=document.querySelector('.brand .logo-mark');
+const logoSvg=logoMark?logoMark.querySelector('svg'):null;
+let logoTick=false;
+addEventListener('scroll',()=>{
+  navEl.classList.toggle('scrolled', scrollY>10);
+  if(!logoTick && logoSvg && !prefersReduced){
+    logoTick=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY;
+      /* gentle continuous rotation tied to scroll position + subtle heartbeat scale */
+      const rot=(y*.15)%360;
+      const beat=1+Math.abs(Math.sin(y*.012))*.12;
+      logoSvg.style.transform=`rotate(${rot}deg) scale(${beat})`;
+      logoTick=false;
+    });
+  }
+},{passive:true});
 
 /* ============ THEME TOGGLE (with graceful persistence) ============ */
 const root=document.documentElement, tBtn=document.getElementById('themeBtn');
