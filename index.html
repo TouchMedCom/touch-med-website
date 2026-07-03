@@ -371,6 +371,53 @@ section{padding-block:var(--sec-pad)}
 .p-order:hover{background:var(--blue-600);color:#fff}
 .prod-empty{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--ink-3);font-size:var(--text-sm)}
 
+/* ===================== PRODUCT DETAIL MODAL ===================== */
+.pm-overlay{
+  position:fixed;inset:0;z-index:110;background:rgba(6,14,32,.62);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:1.2rem;
+  opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s;
+}
+.pm-overlay.open{opacity:1;visibility:visible}
+.pm-modal{
+  background:var(--card);color:var(--ink);border-radius:26px;overflow:hidden;
+  width:min(560px,100%);max-height:92svh;display:flex;flex-direction:column;
+  box-shadow:0 40px 90px -25px rgba(0,0,0,.55);
+  transform:translateY(40px) scale(.94);opacity:0;
+  transition:transform .45s var(--ease),opacity .35s var(--ease);
+}
+.pm-overlay.open .pm-modal{transform:none;opacity:1}
+.pm-media{position:relative;background:var(--hero-grad);aspect-ratio:4/3;display:grid;place-items:center;color:rgba(255,255,255,.9);font-size:4rem;flex:0 0 auto}
+.pm-media img{width:100%;height:100%;object-fit:cover;display:block}
+.pm-close{
+  position:absolute;top:.9rem;left:.9rem;width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(0,0,0,.45);color:#fff;font-size:1.05rem;display:grid;place-items:center;backdrop-filter:blur(4px);
+  transition:transform .3s var(--ease),background .3s;z-index:2;
+}
+.pm-close:hover{transform:rotate(90deg);background:rgba(0,0,0,.65)}
+.pm-badge{position:absolute;top:1rem;right:1rem;background:var(--accent);color:#063;font-weight:800;font-size:.75rem;padding:.35rem 1rem;border-radius:999px;z-index:2}
+.pm-body{padding:1.6rem 1.6rem 1.8rem;overflow-y:auto;display:flex;flex-direction:column;gap:.7rem}
+.pm-cat{font-size:var(--text-xs);color:var(--blue-500);font-weight:800;letter-spacing:.5px}
+.pm-name{font-size:var(--text-xl);font-weight:900;line-height:1.3}
+.pm-desc{font-size:var(--text-sm);color:var(--ink-2);line-height:2}
+.pm-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:.6rem;padding-top:1.1rem;border-top:1px dashed var(--line)}
+.pm-price{font-family:'Alexandria';font-weight:900;font-size:var(--text-xl);color:var(--blue-600)}
+.pm-price span{font-size:var(--text-xs);font-weight:600;color:var(--ink-3)}
+.pm-wa{
+  display:inline-flex;align-items:center;gap:.55rem;background:var(--accent);color:#063;
+  font-weight:800;font-size:var(--text-sm);padding:.85rem 1.7rem;border-radius:999px;
+  box-shadow:0 12px 28px -10px rgba(37,211,102,.55);transition:transform .3s var(--ease);
+}
+.pm-wa:hover{transform:translateY(-3px)}
+@media(max-width:480px){
+  .pm-overlay{padding:0;align-items:flex-end}
+  .pm-modal{width:100%;border-radius:26px 26px 0 0;max-height:94svh;
+    transform:translateY(100%);transition:transform .5s var(--ease),opacity .3s}
+  .pm-overlay.open .pm-modal{transform:none}
+  .pm-foot{flex-direction:column;align-items:stretch}
+  .pm-wa{justify-content:center}
+}
+body.pm-lock{overflow:hidden}
+
 /* ===================== WHY US ===================== */
 .why-grid{display:grid;gap:1.4rem;margin-top:3rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .why-card{
@@ -1022,6 +1069,27 @@ footer ul a:hover{color:#fff;padding-right:6px}
   </div>
 </footer>
 
+<!-- ===================== PRODUCT MODAL ===================== -->
+<div class="pm-overlay" id="pmOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="pm-modal">
+    <div class="pm-media" id="pmMedia">
+      <button class="pm-close" id="pmClose" aria-label="إغلاق">✕</button>
+    </div>
+    <div class="pm-body">
+      <span class="pm-cat" id="pmCat"></span>
+      <h3 class="pm-name" id="pmName"></h3>
+      <p class="pm-desc" id="pmDesc"></p>
+      <div class="pm-foot">
+        <span class="pm-price" id="pmPrice"></span>
+        <a class="pm-wa" id="pmWa" href="#" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.2.3-.3.5l-.5.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.3.1 1.6.7 1.8.9.3.1.4.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+          اطلب على واتساب
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- floating whatsapp -->
 <a class="wa-float" href="https://wa.me/201146849130?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%AD%D8%A7%D8%A8%D8%A8%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA%20%D8%AA%D8%A7%D8%AA%D8%B4%20%D9%85%D9%8A%D8%AF%20%F0%9F%99%8F" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.2.3-.3.5l-.5.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.3.1 1.6.7 1.8.9.3.1.4.2.5.3.1.2.1.7-.1 1.3z"/></svg>
@@ -1236,13 +1304,58 @@ addEventListener('scroll',()=>{
     return `https://wa.me/201146849130?text=${msg}`;
   }
 
+  /* ---------- PRODUCT DETAIL MODAL ---------- */
+  const pmOverlay=document.getElementById('pmOverlay');
+  const pmMedia=document.getElementById('pmMedia');
+  const pmClose=document.getElementById('pmClose');
+
+  function openModal(p){
+    /* media: full image or fallback icon */
+    pmMedia.querySelectorAll('img,.pm-fallback,.pm-badge').forEach(el=>el.remove());
+    if(p.image){
+      const img=document.createElement('img');
+      img.src=p.image; img.alt=p.name;
+      pmMedia.appendChild(img);
+    } else {
+      const fb=document.createElement('span');
+      fb.className='pm-fallback'; fb.textContent='🩺';
+      pmMedia.appendChild(fb);
+    }
+    if(p.featured){
+      const b=document.createElement('span');
+      b.className='pm-badge'; b.textContent='مميز';
+      pmMedia.appendChild(b);
+    }
+    document.getElementById('pmCat').textContent=p.category||'';
+    document.getElementById('pmName').textContent=p.name;
+    document.getElementById('pmDesc').textContent=p.desc||'';
+    document.getElementById('pmPrice').innerHTML=p.price?`${p.price} <span>ج.م</span>`:'';
+    document.getElementById('pmWa').href=waLink(p);
+    pmOverlay.classList.add('open');
+    pmOverlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('pm-lock');
+    /* back button on mobile closes the modal instead of leaving the page */
+    history.pushState({pm:1},'');
+  }
+  function closeModal(fromPop){
+    if(!pmOverlay.classList.contains('open')) return;
+    pmOverlay.classList.remove('open');
+    pmOverlay.setAttribute('aria-hidden','true');
+    document.body.classList.remove('pm-lock');
+    if(!fromPop && history.state && history.state.pm) history.back();
+  }
+  pmClose.addEventListener('click',()=>closeModal(false));
+  pmOverlay.addEventListener('click',e=>{ if(e.target===pmOverlay) closeModal(false); });
+  addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(false); });
+  addEventListener('popstate',()=>closeModal(true));
+
   function render(list){
     if(!list.length){
       grid.innerHTML='<div class="prod-empty">مفيش منتجات في القسم ده حالياً.</div>';
       return;
     }
-    grid.innerHTML=list.map(p=>`
-      <article class="p-card">
+    grid.innerHTML=list.map((p,i)=>`
+      <article class="p-card" data-idx="${i}" style="cursor:pointer" role="button" tabindex="0" aria-label="تفاصيل ${p.name}">
         <div class="p-thumb">
           ${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : '🩺'}
           ${p.featured ? '<span class="p-badge">مميز</span>' : ''}
@@ -1257,6 +1370,17 @@ addEventListener('scroll',()=>{
           </div>
         </div>
       </article>`).join('');
+    /* card click → open modal (WhatsApp button keeps its own behavior) */
+    grid.querySelectorAll('.p-card').forEach(card=>{
+      const p=list[+card.dataset.idx];
+      card.addEventListener('click',e=>{
+        if(e.target.closest('.p-order')) return; /* let the WhatsApp link work normally */
+        openModal(p);
+      });
+      card.addEventListener('keydown',e=>{
+        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openModal(p); }
+      });
+    });
     // staggered cascade-in for the freshly rendered cards
     const cards=grid.querySelectorAll('.p-card');
     cards.forEach((c,i)=>{ c.style.transitionDelay=(i*65)+'ms'; });
