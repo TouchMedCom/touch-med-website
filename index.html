@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تاتش ميد | Touch Med — للمستلزمات الطبية والنماذج التعليمية</title>
+<meta name="description" content="شركة تاتش ميد متخصصة في توريد المستلزمات الطبية عالية الجودة، والأجهزة الطبية الحديثة، والنماذج والمجسمات التعليمية — شارع القصر العيني، القاهرة.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+:root{
+  /* Brand — royal blue from the Touch Med logo */
+  --blue-900:#0a2a5e;
+  --blue-800:#0f3574;
+  --blue-700:#14428f;
+  --blue-600:#1a4fa8;
+  --blue-500:#1f5cc2;
+  --blue-400:#3f7ada;
+  --blue-300:#7ba6ea;
+  --blue-100:#dce9fb;
+  --blue-50:#eef4fd;
+  --accent:#25d366; /* whatsapp green accent */
+
+  --radius-lg:28px;
+  --radius-md:18px;
+  --radius-sm:12px;
+
+  --text-xs:clamp(.78rem,.74rem + .2vw,.86rem);
+  --text-sm:clamp(.9rem,.85rem + .25vw,1rem);
+  --text-base:clamp(1rem,.93rem + .4vw,1.15rem);
+  --text-lg:clamp(1.2rem,1.05rem + .8vw,1.5rem);
+  --text-xl:clamp(1.55rem,1.2rem + 1.6vw,2.2rem);
+  --text-2xl:clamp(2rem,1.4rem + 3vw,3.4rem);
+  --text-hero:clamp(2.4rem,1.6rem + 4.5vw,4.6rem);
+
+  --sec-pad:clamp(4rem,9vw,8rem);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+[data-theme="light"]{
+  --bg:#f5f8fd;
+  --bg-2:#ffffff;
+  --bg-3:#eaf1fb;
+  --ink:#0d1b33;
+  --ink-2:#44526e;
+  --ink-3:#7484a3;
+  --line:rgba(20,66,143,.14);
+  --card:#ffffff;
+  --card-shadow:0 18px 50px -18px rgba(15,53,116,.22);
+  --hero-grad:linear-gradient(160deg,#0f3574 0%,#1a4fa8 55%,#1f5cc2 100%);
+  --nav-bg:rgba(255,255,255,.78);
+  --chip-bg:var(--blue-50);
+  --glow:rgba(31,92,194,.18);
+}
+[data-theme="dark"]{
+  --bg:#080f1e;
+  --bg-2:#0d1730;
+  --bg-3:#101d3c;
+  --ink:#e9f0fb;
+  --ink-2:#aebcd6;
+  --ink-3:#7286a8;
+  --line:rgba(123,166,234,.16);
+  --card:#101d3c;
+  --card-shadow:0 22px 60px -20px rgba(0,0,0,.65);
+  --hero-grad:linear-gradient(160deg,#060c19 0%,#0e2a5c 55%,#14428f 100%);
+  --nav-bg:rgba(8,15,30,.72);
+  --chip-bg:rgba(31,92,194,.16);
+  --glow:rgba(63,122,218,.25);
+}
+
+/* ===================== BASE ===================== */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);
+  font-size:var(--text-base);line-height:1.85;
+  overflow-x:hidden;
+  transition:background .45s ease,color .45s ease;
+}
+h1,h2,h3,h4,.display{font-family:'Alexandria',sans-serif;line-height:1.35}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--blue-500);color:#fff}
+.container{width:min(1180px,92%);margin-inline:auto}
+
+/* ===================== REVEAL ON SCROLL ===================== */
+.rv{opacity:0;transform:translateY(38px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv-r{opacity:0;transform:translateX(-46px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv-l{opacity:0;transform:translateX(46px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv-r.in,.rv-l.in{opacity:1;transform:none}
+.rv-scale{opacity:0;transform:scale(.86);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv-scale.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv,.rv-r,.rv-l,.rv-scale{opacity:1;transform:none;transition:none}
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+}
+
+/* ===================== NAV ===================== */
+.nav{
+  position:fixed;inset-inline:0;top:0;z-index:60;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:var(--nav-bg);
+  border-bottom:1px solid var(--line);
+  transform:translateY(-100%);animation:navDrop .8s var(--ease) .2s forwards;
+}
+@keyframes navDrop{to{transform:none}}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0;gap:1rem}
+.brand{display:flex;align-items:center;gap:.65rem;font-family:'Alexandria';font-weight:800;font-size:1.15rem}
+.brand .logo-mark{width:44px;height:44px;border-radius:12px;background:var(--hero-grad);display:grid;place-items:center;box-shadow:0 8px 20px -6px var(--glow)}
+.brand .logo-mark svg{width:28px;height:28px}
+.brand small{display:block;font-family:'IBM Plex Sans Arabic';font-weight:400;font-size:.68rem;color:var(--ink-3);letter-spacing:.5px}
+.nav-links{display:none;gap:1.6rem;font-size:var(--text-sm);font-weight:600}
+.nav-links a{position:relative;padding:.3rem 0;color:var(--ink-2);transition:color .3s}
+.nav-links a::after{content:"";position:absolute;bottom:0;right:0;width:0;height:2px;border-radius:2px;background:var(--blue-500);transition:width .35s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.nav-actions{display:flex;align-items:center;gap:.6rem}
+.theme-btn{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;
+  transition:transform .4s var(--ease),box-shadow .3s;font-size:1.1rem;
+}
+.theme-btn:hover{transform:rotate(30deg) scale(1.08);box-shadow:0 8px 22px -8px var(--glow)}
+.cta-nav{
+  background:var(--blue-600);color:#fff;font-weight:700;font-size:var(--text-sm);
+  padding:.65rem 1.35rem;border-radius:999px;display:none;
+  box-shadow:0 10px 25px -8px var(--glow);transition:transform .3s var(--ease),background .3s;
+}
+.cta-nav:hover{transform:translateY(-3px);background:var(--blue-500)}
+@media(min-width:860px){.nav-links{display:flex}.cta-nav{display:inline-block}}
+
+/* ===================== HERO ===================== */
+.hero{
+  position:relative;min-height:100svh;display:flex;align-items:center;
+  background:var(--hero-grad);color:#fff;overflow:hidden;
+  padding-top:6.5rem;padding-bottom:4rem;
+}
+/* floating decorative blobs */
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;pointer-events:none}
+.blob-1{width:520px;height:520px;background:#3f7ada;top:-160px;left:-140px;animation:drift 14s ease-in-out infinite alternate}
+.blob-2{width:420px;height:420px;background:#0a2a5e;bottom:-140px;right:-120px;animation:drift 18s ease-in-out infinite alternate-reverse}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.15)}}
+/* medical crosses pattern */
+.hero-pattern{position:absolute;inset:0;opacity:.06;pointer-events:none;
+  background-image:radial-gradient(circle at 2px 2px,#fff 2px,transparent 0);background-size:38px 38px}
+.hero-grid{display:grid;gap:3rem;align-items:center;position:relative;z-index:2}
+@media(min-width:960px){.hero-grid{grid-template-columns:1.15fr .85fr}}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.25);padding:.45rem 1.1rem;border-radius:999px;
+  font-size:var(--text-xs);font-weight:600;backdrop-filter:blur(6px);
+  animation:fadeUp .9s var(--ease) .3s both;
+}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.6)}55%{box-shadow:0 0 0 9px rgba(74,222,128,0)}}
+.hero h1{font-size:var(--text-hero);font-weight:900;margin:1.2rem 0 .4rem;animation:fadeUp .9s var(--ease) .45s both}
+.hero h1 .stroke{color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.85)}
+.hero .en{font-size:var(--text-lg);font-weight:300;letter-spacing:6px;text-transform:uppercase;opacity:.85;animation:fadeUp .9s var(--ease) .55s both}
+.hero p.lead{max-width:34rem;font-size:var(--text-base);color:rgba(255,255,255,.86);margin:1.4rem 0 2.2rem;animation:fadeUp .9s var(--ease) .68s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:1rem;animation:fadeUp .9s var(--ease) .8s both}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;font-weight:700;font-size:var(--text-sm);
+  padding:.95rem 2rem;border-radius:999px;transition:transform .35s var(--ease),box-shadow .35s,background .3s;
+  min-height:48px;
+}
+.btn-light{background:#fff;color:var(--blue-700)}
+.btn-light:hover{transform:translateY(-4px);box-shadow:0 16px 36px -12px rgba(0,0,0,.4)}
+.btn-ghost{border:1.5px solid rgba(255,255,255,.5);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.12);transform:translateY(-4px)}
+.btn-wa{background:var(--accent);color:#063;box-shadow:0 12px 30px -10px rgba(37,211,102,.55)}
+.btn-wa:hover{transform:translateY(-4px)}
+
+/* hero visual: stethoscope heart + ECG */
+.hero-visual{position:relative;display:grid;place-items:center;animation:fadeUp 1s var(--ease) .9s both}
+.pulse-card{
+  width:min(420px,100%);aspect-ratio:1/1.02;border-radius:36px;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(10px);display:grid;place-items:center;position:relative;overflow:hidden;
+  animation:floaty 6s ease-in-out infinite;
+}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(-1.2deg)}}
+.pulse-card svg{width:78%;height:auto}
+/* ECG draw animation */
+.ecg-path{stroke-dasharray:1200;stroke-dashoffset:1200;animation:ecg 3.4s linear infinite}
+@keyframes ecg{0%{stroke-dashoffset:1200}60%{stroke-dashoffset:0}100%{stroke-dashoffset:-1200}}
+.heart-path{transform-origin:center;animation:beat 1.7s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.04)}24%{transform:scale(1)}}
+.orbit-chip{
+  position:absolute;background:#fff;color:var(--blue-700);font-weight:700;font-size:.8rem;
+  padding:.5rem 1rem;border-radius:999px;box-shadow:0 12px 28px -10px rgba(0,0,0,.35);
+  display:flex;align-items:center;gap:.4rem;white-space:nowrap;
+}
+.chip-1{top:8%;right:-4%;animation:floaty 5s ease-in-out infinite}
+.chip-2{bottom:14%;left:-6%;animation:floaty 7s ease-in-out 1s infinite}
+.chip-3{top:46%;right:-9%;animation:floaty 6s ease-in-out .5s infinite}
+@media(max-width:520px){.chip-1{right:0}.chip-2{left:0}.chip-3{display:none}}
+
+/* scrolling marquee strip under hero */
+.marquee{background:var(--blue-900);color:#cfe0fa;padding:.85rem 0;overflow:hidden;border-block:1px solid rgba(255,255,255,.08)}
+.marquee-track{display:flex;gap:3.5rem;width:max-content;animation:scrollX 26s linear infinite}
+.marquee span{display:flex;align-items:center;gap:.7rem;font-size:var(--text-sm);font-weight:600;white-space:nowrap}
+.marquee .plus{color:#4ade80}
+@keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(50%)}}
+
+/* ===================== SECTION HEADERS ===================== */
+section{padding-block:var(--sec-pad)}
+.sec-tag{
+  display:inline-flex;align-items:center;gap:.5rem;color:var(--blue-500);font-weight:800;
+  font-size:var(--text-xs);letter-spacing:1px;background:var(--chip-bg);
+  padding:.4rem 1.05rem;border-radius:999px;margin-bottom:1rem;border:1px solid var(--line);
+}
+.sec-title{font-size:var(--text-2xl);font-weight:900;margin-bottom:.8rem}
+.sec-title em{font-style:normal;color:var(--blue-500);position:relative}
+.sec-title em::after{content:"";position:absolute;right:0;left:0;bottom:.08em;height:.32em;background:var(--blue-100);z-index:-1;border-radius:4px}
+[data-theme="dark"] .sec-title em::after{background:rgba(31,92,194,.3)}
+.sec-sub{color:var(--ink-2);max-width:42rem;font-size:var(--text-base)}
+
+/* ===================== ABOUT ===================== */
+.about-grid{display:grid;gap:3rem;align-items:center}
+@media(min-width:940px){.about-grid{grid-template-columns:1fr 1fr}}
+.about-visual{position:relative}
+.about-frame{
+  border-radius:var(--radius-lg);background:var(--hero-grad);padding:2.6rem;color:#fff;
+  position:relative;overflow:hidden;box-shadow:var(--card-shadow);
+}
+.about-frame::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(255,255,255,.35) 1.5px,transparent 0);background-size:30px 30px;opacity:.15}
+.about-frame h3{font-size:var(--text-xl);font-weight:800;margin-bottom:1rem;position:relative}
+.about-frame p{position:relative;color:rgba(255,255,255,.88);font-size:var(--text-sm)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem;position:relative}
+.stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-md);padding:1.1rem .6rem;text-align:center;backdrop-filter:blur(6px)}
+.stat b{display:block;font-family:'Alexandria';font-size:var(--text-xl);font-weight:900}
+.stat span{font-size:var(--text-xs);opacity:.85}
+.feature-list{display:grid;gap:1.1rem;margin-top:2rem}
+.feature{
+  display:flex;gap:1.1rem;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius-md);padding:1.2rem 1.4rem;transition:transform .4s var(--ease),box-shadow .4s;
+}
+.feature:hover{transform:translateX(-8px);box-shadow:var(--card-shadow)}
+.feature .ic{
+  flex:0 0 52px;height:52px;border-radius:14px;background:var(--chip-bg);color:var(--blue-500);
+  display:grid;place-items:center;font-size:1.4rem;
+}
+.feature h4{font-size:var(--text-base);font-weight:700;margin-bottom:.2rem}
+.feature p{font-size:var(--text-sm);color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<style>
+/* ===================== CATEGORIES ===================== */
+.cats{background:var(--bg-3);position:relative;overflow:hidden}
+.cats::before{content:"+";position:absolute;font-family:'Alexandria';font-weight:900;font-size:22rem;color:var(--blue-500);opacity:.05;top:-6rem;left:-3rem;line-height:1;pointer-events:none}
+.cat-grid{display:grid;gap:1.4rem;margin-top:3rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.cat-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:2.2rem 1.8rem;position:relative;overflow:hidden;
+  transition:transform .5s var(--ease),box-shadow .5s;
+}
+.cat-card::after{
+  content:"";position:absolute;inset-inline:0;bottom:0;height:5px;
+  background:linear-gradient(90deg,var(--blue-400),var(--blue-600));
+  transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease);
+}
+.cat-card:hover{transform:translateY(-12px);box-shadow:var(--card-shadow)}
+.cat-card:hover::after{transform:scaleX(1)}
+.cat-card .num{
+  position:absolute;top:1.2rem;left:1.4rem;font-family:'Alexandria';font-weight:900;
+  font-size:2.6rem;color:var(--blue-500);opacity:.12;line-height:1;
+}
+.cat-icon{
+  width:66px;height:66px;border-radius:20px;background:var(--chip-bg);color:var(--blue-500);
+  display:grid;place-items:center;margin-bottom:1.3rem;transition:transform .5s var(--ease),background .3s,color .3s;
+}
+.cat-icon svg{width:34px;height:34px}
+.cat-card:hover .cat-icon{background:var(--blue-600);color:#fff;transform:rotate(-8deg) scale(1.08)}
+.cat-card h3{font-size:var(--text-lg);font-weight:800;margin-bottom:.5rem}
+.cat-card p{font-size:var(--text-sm);color:var(--ink-2)}
+
+/* ===================== PRODUCTS ===================== */
+.prod-filters{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.2rem}
+.pf-btn{
+  border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-weight:700;font-size:var(--text-sm);
+  padding:.55rem 1.3rem;border-radius:999px;cursor:pointer;transition:all .3s var(--ease);
+}
+.pf-btn:hover{border-color:var(--blue-500);color:var(--blue-500)}
+.pf-btn.active{background:var(--blue-600);border-color:var(--blue-600);color:#fff}
+.prod-grid{display:grid;gap:1.5rem;margin-top:2.2rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.p-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;
+  transition:transform .5s var(--ease),box-shadow .5s;display:flex;flex-direction:column;
+}
+.p-card:hover{transform:translateY(-10px);box-shadow:var(--card-shadow)}
+.p-thumb{
+  aspect-ratio:4/3;background:var(--hero-grad);display:grid;place-items:center;color:rgba(255,255,255,.85);
+  font-size:2.6rem;position:relative;overflow:hidden;
+}
+.p-thumb img{width:100%;height:100%;object-fit:cover}
+.p-badge{position:absolute;top:.8rem;left:.8rem;background:var(--accent);color:#063;font-weight:800;font-size:.7rem;padding:.3rem .8rem;border-radius:999px}
+.p-body{padding:1.3rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.p-cat{font-size:var(--text-xs);color:var(--blue-500);font-weight:700}
+.p-name{font-size:var(--text-base);font-weight:800}
+.p-desc{font-size:var(--text-sm);color:var(--ink-2);flex:1}
+.p-foot{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem}
+.p-price{font-family:'Alexandria';font-weight:900;font-size:var(--text-lg);color:var(--blue-600)}
+.p-price span{font-size:var(--text-xs);font-weight:600;color:var(--ink-3)}
+.p-order{
+  background:var(--chip-bg);color:var(--blue-600);font-weight:700;font-size:var(--text-xs);
+  padding:.5rem 1.1rem;border-radius:999px;transition:background .3s,color .3s;
+}
+.p-order:hover{background:var(--blue-600);color:#fff}
+.prod-empty{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--ink-3);font-size:var(--text-sm)}
+
+/* ===================== WHY US ===================== */
+.why-grid{display:grid;gap:1.4rem;margin-top:3rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.why-card{
+  border-radius:var(--radius-lg);padding:2.4rem 2rem;position:relative;overflow:hidden;
+  background:var(--card);border:1px solid var(--line);
+  transition:transform .5s var(--ease),box-shadow .5s;
+}
+.why-card:hover{transform:translateY(-10px) rotate(-.6deg);box-shadow:var(--card-shadow)}
+.why-card.hi{background:var(--hero-grad);color:#fff;border:none}
+.why-card.hi p{color:rgba(255,255,255,.85)}
+.why-card .big-ic{font-size:2.4rem;margin-bottom:1rem;display:inline-block;animation:floaty 5s ease-in-out infinite}
+.why-card h3{font-size:var(--text-lg);font-weight:800;margin-bottom:.6rem}
+.why-card p{font-size:var(--text-sm);color:var(--ink-2)}
+
+/* ===================== TESTIMONIALS ===================== */
+.testi{background:var(--bg-3);position:relative;overflow:hidden}
+.testi::after{content:"❞";position:absolute;top:-4rem;right:-2rem;font-size:26rem;color:var(--blue-500);opacity:.05;line-height:1;pointer-events:none}
+.fb-badge{display:inline-flex;align-items:center;gap:.55rem;margin-top:1rem;color:var(--ink-2);font-size:var(--text-sm);font-weight:600}
+.fb-badge .fb{width:26px;height:26px;border-radius:50%;background:#1877f2;color:#fff;display:grid;place-items:center;font-weight:900;font-family:'Alexandria';font-size:.95rem}
+.testi-grid{display:grid;gap:1.4rem;margin-top:3rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.t-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:2rem 1.8rem;position:relative;display:flex;flex-direction:column;gap:1.2rem;
+  transition:transform .5s var(--ease),box-shadow .5s;
+}
+.t-card:hover{transform:translateY(-10px);box-shadow:var(--card-shadow)}
+.t-card .quote-mark{
+  position:absolute;top:1.1rem;left:1.4rem;font-family:'Alexandria';font-size:3.4rem;font-weight:900;
+  color:var(--blue-500);opacity:.14;line-height:1;
+}
+.t-stars{color:#f6b01e;font-size:1.05rem;letter-spacing:2px}
+.t-text{font-size:var(--text-base);font-weight:600;line-height:2}
+.t-user{display:flex;align-items:center;gap:.9rem;margin-top:auto;padding-top:1.1rem;border-top:1px dashed var(--line)}
+.t-avatar{
+  width:50px;height:50px;border-radius:50%;flex:0 0 50px;
+  background:var(--hero-grad);color:#fff;display:grid;place-items:center;
+  font-family:'Alexandria';font-weight:800;font-size:1.15rem;
+}
+.t-user b{display:block;font-size:var(--text-sm)}
+.t-user span{font-size:var(--text-xs);color:var(--ink-3);display:flex;align-items:center;gap:.35rem}
+.t-user span .rec{color:#1877f2;font-weight:700}
+
+/* ===================== CONTACT ===================== */
+.contact-grid{display:grid;gap:2.5rem;margin-top:3rem}
+@media(min-width:940px){.contact-grid{grid-template-columns:1.05fr .95fr}}
+.c-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:2.4rem;box-shadow:var(--card-shadow);
+}
+.c-item{display:flex;gap:1.1rem;align-items:flex-start;padding:1.15rem 0;border-bottom:1px dashed var(--line)}
+.c-item:last-child{border:none}
+.c-item .ic{flex:0 0 50px;height:50px;border-radius:14px;background:var(--chip-bg);color:var(--blue-500);display:grid;place-items:center;font-size:1.3rem}
+.c-item h4{font-size:var(--text-sm);color:var(--ink-3);font-weight:600;margin-bottom:.15rem}
+.c-item p,.c-item a{font-size:var(--text-base);font-weight:700;direction:ltr;text-align:right;display:block}
+.c-item p.ar{direction:rtl}
+.c-item a:hover{color:var(--blue-500)}
+.map-card{
+  border-radius:var(--radius-lg);overflow:hidden;background:var(--hero-grad);color:#fff;
+  padding:2.6rem;display:flex;flex-direction:column;justify-content:space-between;gap:2rem;
+  position:relative;box-shadow:var(--card-shadow);
+}
+.map-card::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(255,255,255,.3) 1.5px,transparent 0);background-size:28px 28px;opacity:.14}
+.map-card h3{font-size:var(--text-xl);font-weight:900;position:relative}
+.map-card p{position:relative;color:rgba(255,255,255,.86);font-size:var(--text-sm)}
+.map-pin{font-size:3rem;position:relative;animation:bounce 2.2s ease-in-out infinite;display:inline-block}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.map-actions{display:flex;flex-wrap:wrap;gap:.9rem;position:relative}
+
+/* ===================== FOOTER ===================== */
+footer{background:var(--blue-900);color:#cfe0fa;padding:3.5rem 0 2rem;position:relative;overflow:hidden}
+footer .ecg-footer{position:absolute;inset-inline:0;top:0;opacity:.15}
+.f-grid{display:grid;gap:2.2rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));position:relative}
+.f-brand{font-family:'Alexandria';font-weight:900;font-size:1.5rem;color:#fff;margin-bottom:.6rem}
+footer p{font-size:var(--text-sm);color:#9db8e4}
+footer h4{color:#fff;font-size:var(--text-base);margin-bottom:1rem}
+footer ul{list-style:none;display:grid;gap:.55rem;font-size:var(--text-sm)}
+footer ul a{color:#9db8e4;transition:color .3s,padding .3s}
+footer ul a:hover{color:#fff;padding-right:6px}
+.f-bottom{margin-top:2.8rem;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.12);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;font-size:var(--text-xs);color:#7d9ccf;position:relative}
+
+/* floating whatsapp */
+.wa-float{
+  position:fixed;bottom:1.6rem;left:1.6rem;z-index:70;width:60px;height:60px;border-radius:50%;
+  background:var(--accent);display:grid;place-items:center;color:#fff;
+  box-shadow:0 14px 34px -8px rgba(37,211,102,.6);
+  animation:waPulse 2.4s infinite;transition:transform .3s var(--ease);
+}
+.wa-float:hover{transform:scale(1.12)}
+.wa-float svg{width:32px;height:32px}
+@keyframes waPulse{0%,100%{box-shadow:0 14px 34px -8px rgba(37,211,102,.6),0 0 0 0 rgba(37,211,102,.45)}55%{box-shadow:0 14px 34px -8px rgba(37,211,102,.6),0 0 0 18px rgba(37,211,102,0)}}
+
+/* scroll progress bar */
+.progress{position:fixed;top:0;inset-inline:0;height:3.5px;z-index:80;background:transparent}
+.progress b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue-400),var(--accent));transition:width .1s linear;border-radius:0 3px 3px 0}
+</style>
+
+<!-- scroll progress -->
+<div class="progress"><b id="pbar"></b></div>
+
+<!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4.5-3.6-8-6.8-8-10.5C4 7 6 5 8.5 5c1.5 0 2.7.7 3.5 1.8C12.8 5.7 14 5 15.5 5 18 5 20 7 20 10.5c0 3.7-3.5 6.9-8 10.5z"/><path d="M5.5 11h3l1.5-3 2 5 1.5-2h4"/></svg>
+      </span>
+      <span>تاتش ميد<small>Touch Med — for medical supplies</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#about">من نحن</a>
+      <a href="#cats">منتجاتنا</a>
+      <a href="#products">أحدث المنتجات</a>
+      <a href="#why">لماذا نحن؟</a>
+      <a href="#testi">آراء العملاء</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-btn" id="themeBtn" aria-label="تبديل الوضع الليلي">🌙</button>
+      <a href="https://wa.me/201146849130" target="_blank" rel="noopener" class="cta-nav">اطلب الآن</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-pattern"></div>
+  <div class="container hero-grid">
+    <div>
+      <span class="hero-badge"><span class="dot"></span> شارع القصر العيني — قلب المنطقة الطبية في مصر</span>
+      <h1>تاتش <span class="stroke">ميد</span></h1>
+      <div class="en">Touch Med</div>
+      <p class="lead">
+        شركة متخصصة في توريد <b>المستلزمات الطبية عالية الجودة</b>، والأجهزة الطبية الحديثة،
+        والنماذج والمجسمات التعليمية لطلبة كليات الطب والأطباء والعاملين في المجال الصحي —
+        بصور حقيقية للمنتجات وأسعار مظبوطة.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-wa" href="https://wa.me/201146849130" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.2.3-.3.5l-.5.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.3.1 1.6.7 1.8.9.3.1.4.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+          كلمنا واتساب
+        </a>
+        <a class="btn btn-light" href="#cats">استكشف منتجاتنا</a>
+        <a class="btn btn-ghost" href="tel:+201147253612">📞 01147253612</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="pulse-card">
+        <svg viewBox="0 0 300 300" fill="none">
+          <path class="heart-path" d="M150 265 C95 222 45 180 45 122 C45 80 74 55 106 55 c19 0 35 9 44 24 9-15 25-24 44-24 32 0 61 25 61 67 0 58-50 100-105 143z" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="ecg-path" d="M60 140 h55 l12-28 16 56 14-42 10 14 h73" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="orbit-chip chip-1">🩺 أجهزة طبية حديثة</span>
+      <span class="orbit-chip chip-2">🦴 نماذج تشريحية تعليمية</span>
+      <span class="orbit-chip chip-3">✅ صور حقيقية 100%</span>
+    </div>
+  </div>
+</section>
+
+<!-- marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee">
+    <span><i class="plus">＋</i> مستلزمات طبية عالية الجودة</span>
+    <span><i class="plus">＋</i> أجهزة قياس الضغط والاستنشاق</span>
+    <span><i class="plus">＋</i> هياكل عظمية ونماذج تشريحية</span>
+    <span><i class="plus">＋</i> أجهزة رعاية منزلية</span>
+    <span><i class="plus">＋</i> أسعار مناسبة جداً</span>
+    <span><i class="plus">＋</i> توصيل لجميع المحافظات</span>
+  </div>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about">
+  <div class="container about-grid">
+    <div class="rv-r">
+      <span class="sec-tag">🏥 من نحن</span>
+      <h2 class="sec-title">لمسة طبية <em>تثق فيها</em></h2>
+      <p class="sec-sub">
+        «تاتش ميد» مش مجرد متجر مستلزمات طبية — إحنا بنتبنى استراتيجية أساسها
+        <b>الواقعية والشفافية</b> في عرض المنتجات. بنبتعد عن صور الكتالوجات وبنعرض
+        صور حقيقية للمنتج من أرض الواقع، عشان نكسر حاجز الشك عند عملائنا.
+      </p>
+      <div class="feature-list">
+        <div class="feature rv" style="transition-delay:.05s">
+          <span class="ic">📸</span>
+          <div>
+            <h4>تجربة بصرية حقيقية</h4>
+            <p>صور فعلية للمنتجات بدل صور الشركات المصنعة — اللي هتشوفه هو اللي هيوصلك.</p>
+          </div>
+        </div>
+        <div class="feature rv" style="transition-delay:.15s">
+          <span class="ic">🎓</span>
+          <div>
+            <h4>تخصص طبي تعليمي</h4>
+            <p>اهتمام خاص بأدوات طلبة كليات الطب والدراسات التشريحية: هياكل عظمية ومجسمات دقيقة.</p>
+          </div>
+        </div>
+        <div class="feature rv" style="transition-delay:.25s">
+          <span class="ic">🏠</span>
+          <div>
+            <h4>أجهزة الرعاية المنزلية</h4>
+            <p>أجهزة قياس الضغط وأجهزة الاستنشاق وكل ما يلزم الاستخدام اليومي، خاصة في الشتاء.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rv-l about-visual">
+      <div class="about-frame">
+        <h3>موقع استراتيجي في قلب القاهرة الطبية</h3>
+        <p>
+          وجودنا في شارع القصر العيني بوسط القاهرة يضعنا في قلب أكبر تجمع
+          للمستشفيات وكليات الطب ومراكز التدريب الطبي في مصر — وجهة سهلة الوصول
+          للطلاب والأطباء والعاملين في المجال الصحي.
+        </p>
+        <div class="stats">
+          <div class="stat"><b data-count="500">0</b><span>+ منتج طبي</span></div>
+          <div class="stat"><b data-count="100">0</b><span>% صور حقيقية</span></div>
+          <div class="stat"><b data-count="7">0</b><span>أيام أسبوعياً</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CATEGORIES ===================== -->
+<section class="cats" id="cats">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">🧰 منتجاتنا</span>
+      <h2 class="sec-title">كل اللي محتاجه في <em>مكان واحد</em></h2>
+      <p class="sec-sub">تشكيلة متكاملة تخدم الطالب والطبيب والمريض في بيته.</p>
+    </div>
+    <div class="cat-grid">
+      <article class="cat-card rv" style="transition-delay:.05s">
+        <span class="num">01</span>
+        <span class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a6 6 0 0 0 12 0V3"/><path d="M6 3h2M16 3h2"/><path d="M12 15v3a4 4 0 0 0 8 0v-2"/><circle cx="20" cy="14" r="2"/></svg></span>
+        <h3>المستلزمات الطبية</h3>
+        <p>مستلزمات طبية عالية الجودة للعيادات والمستشفيات والاستخدام الشخصي، مختارة بعناية من مصادر موثوقة.</p>
+      </article>
+      <article class="cat-card rv" style="transition-delay:.15s">
+        <span class="num">02</span>
+        <span class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M7 12h3l1.5-3 2 5 1.5-3h2"/></svg></span>
+        <h3>الأجهزة الطبية الحديثة</h3>
+        <p>أجهزة قياس الضغط، أجهزة الاستنشاق، وأحدث الأجهزة الطبية بضمان وجودة مضمونة.</p>
+      </article>
+      <article class="cat-card rv" style="transition-delay:.25s">
+        <span class="num">03</span>
+        <span class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><path d="M12 7.5v9M8 10h8M9.5 21l2.5-4.5L14.5 21"/></svg></span>
+        <h3>النماذج والمجسمات التعليمية</h3>
+        <p>هياكل عظمية ومجسمات تشريحية دقيقة لطلبة كليات الطب والمهتمين بالدراسات التشريحية.</p>
+      </article>
+      <article class="cat-card rv" style="transition-delay:.35s">
+        <span class="num">04</span>
+        <span class="cat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/><path d="M12 13v4M10 15h4"/></svg></span>
+        <h3>أجهزة الرعاية المنزلية</h3>
+        <p>كل ما تحتاجه العائلة للمتابعة الصحية اليومية في المنزل — ضرورية خاصة في فصل الشتاء.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRODUCTS SHOWCASE ===================== -->
+<section id="products">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">🛒 أحدث المنتجات</span>
+      <h2 class="sec-title">تشكيلة <em>مختارة بعناية</em></h2>
+      <p class="sec-sub">المنتجات دي بتتحدث أول بأول من صفحة الأدمين — اطلب اللي يعجبك مباشرة على واتساب.</p>
+      <div class="prod-filters" id="prodFilters">
+        <button class="pf-btn active" data-cat="الكل">الكل</button>
+      </div>
+    </div>
+    <div class="prod-grid" id="prodGrid">
+      <div class="prod-empty">جاري تحميل المنتجات...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY US ===================== -->
+<section id="why">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">⭐ لماذا تاتش ميد؟</span>
+      <h2 class="sec-title">مش كلام تسويق… <em>ده أسلوب شغلنا</em></h2>
+    </div>
+    <div class="why-grid">
+      <article class="why-card hi rv-scale" style="transition-delay:.05s">
+        <span class="big-ic">🔍</span>
+        <h3>واقعية وشفافية</h3>
+        <p>صور حقيقية للمنتجات من أرض الواقع — خاصة في الأدوات اللي بتتطلب دقة زي الهياكل التعليمية والأجهزة الطبية.</p>
+      </article>
+      <article class="why-card rv-scale" style="transition-delay:.15s">
+        <span class="big-ic">📍</span>
+        <h3>موقع مركزي</h3>
+        <p>في قلب شارع القصر العيني — أكبر تجمع للمستشفيات وكليات الطب ومراكز التدريب في مصر.</p>
+      </article>
+      <article class="why-card rv-scale" style="transition-delay:.25s">
+        <span class="big-ic">💰</span>
+        <h3>أسعار مظبوطة</h3>
+        <p>أسعار مناسبة جداً بشهادة عملائنا — جودة عالية من غير مبالغة في التكلفة.</p>
+      </article>
+      <article class="why-card rv-scale" style="transition-delay:.35s">
+        <span class="big-ic">🤝</span>
+        <h3>تعامل محترم</h3>
+        <p>أسلوب ودود واحترافي في التواصل، ورد سريع على كل استفسارات عملائنا.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section class="testi" id="testi">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">💬 آراء العملاء</span>
+      <h2 class="sec-title">عملاؤنا <em>يوصون بنا</em></h2>
+      <div class="fb-badge"><span class="fb">f</span> توصيات حقيقية من صفحتنا على فيسبوك</div>
+    </div>
+    <div class="testi-grid">
+      <article class="t-card rv" style="transition-delay:.05s">
+        <span class="quote-mark">❝</span>
+        <div class="t-stars">★★★★★</div>
+        <p class="t-text">شركة محترمة جداً وأسعارهم مظبوطة.</p>
+        <div class="t-user">
+          <span class="t-avatar">ع</span>
+          <div>
+            <b>علي إسلام</b>
+            <span><span class="rec">👍 يوصي بالصفحة</span> · أغسطس 2025</span>
+          </div>
+        </div>
+      </article>
+      <article class="t-card rv" style="transition-delay:.15s">
+        <span class="quote-mark">❝</span>
+        <div class="t-stars">★★★★★</div>
+        <p class="t-text">ناس محترمة وخبرة، والأسعار مناسبة جداً.</p>
+        <div class="t-user">
+          <span class="t-avatar">ع</span>
+          <div>
+            <b>عمرو سعيد</b>
+            <span><span class="rec">👍 يوصي بالصفحة</span> · أغسطس 2025</span>
+          </div>
+        </div>
+      </article>
+      <article class="t-card rv" style="transition-delay:.25s">
+        <span class="quote-mark">❝</span>
+        <div class="t-stars">★★★★★</div>
+        <p class="t-text">أهل ثقة وخبرة، بارك الله في عملكم.</p>
+        <div class="t-user">
+          <span class="t-avatar">ح</span>
+          <div>
+            <b>حسناء أشرف</b>
+            <span><span class="rec">👍 توصي بالصفحة</span> · أغسطس 2025</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">📞 تواصل معنا</span>
+      <h2 class="sec-title">إحنا <em>أقرب مما تتخيل</em></h2>
+      <p class="sec-sub">زورنا في الفرع، أو كلمنا واتساب وهنرد عليك في أسرع وقت.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="c-card rv-r">
+        <div class="c-item">
+          <span class="ic">📍</span>
+          <div>
+            <h4>العنوان</h4>
+            <p class="ar">شارع القصر العيني، شارع الموردي — أول شمال، تاني شركة في وش أبو سمرة، القاهرة، مصر ١١٥٦٢</p>
+          </div>
+        </div>
+        <div class="c-item">
+          <span class="ic">📱</span>
+          <div>
+            <h4>الهاتف / موبايل</h4>
+            <a href="tel:+201147253612">01147253612</a>
+          </div>
+        </div>
+        <div class="c-item">
+          <span class="ic">💬</span>
+          <div>
+            <h4>واتساب</h4>
+            <a href="https://wa.me/201146849130" target="_blank" rel="noopener">01146849130</a>
+          </div>
+        </div>
+        <div class="c-item">
+          <span class="ic">📷</span>
+          <div>
+            <h4>انستجرام</h4>
+            <a href="https://www.instagram.com/touchmed1" target="_blank" rel="noopener">instagram.com/touchmed1</a>
+          </div>
+        </div>
+      </div>
+      <div class="map-card rv-l">
+        <div>
+          <span class="map-pin">📍</span>
+          <h3>في قلب القصر العيني</h3>
+          <p>على بعد خطوات من أكبر المستشفيات وكليات الطب في مصر — يسهل الوصول إلينا بالمواصلات العامة من أي مكان في القاهرة.</p>
+        </div>
+        <div class="map-actions">
+          <a class="btn btn-light" href="https://www.google.com/maps/search/?api=1&query=%D8%B4%D8%A7%D8%B1%D8%B9+%D8%A7%D9%84%D9%82%D8%B5%D8%B1+%D8%A7%D9%84%D8%B9%D9%8A%D9%86%D9%8A+%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9" target="_blank" rel="noopener">🗺️ افتح الخريطة</a>
+          <a class="btn btn-wa" href="https://wa.me/201146849130" target="_blank" rel="noopener">اسأل عن منتج</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <svg class="ecg-footer" viewBox="0 0 1200 60" preserveAspectRatio="none" height="60">
+    <path d="M0 30 h200 l15-22 20 44 15-30 12 8 h240 l15-22 20 44 15-30 12 8 h240 l15-22 20 44 15-30 12 8 h320" stroke="#7ba6ea" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <div class="f-brand">تاتش ميد 🩺</div>
+        <p>للمستلزمات الطبية والأجهزة الحديثة والنماذج التعليمية — واقعية وشفافية في كل منتج.</p>
+      </div>
+      <div>
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="#about">من نحن</a></li>
+          <li><a href="#cats">منتجاتنا</a></li>
+          <li><a href="#why">لماذا نحن؟</a></li>
+          <li><a href="#testi">آراء العملاء</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>منتجاتنا</h4>
+        <ul>
+          <li><a href="#cats">مستلزمات طبية</a></li>
+          <li><a href="#cats">أجهزة طبية حديثة</a></li>
+          <li><a href="#cats">نماذج تعليمية</a></li>
+          <li><a href="#cats">رعاية منزلية</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>تواصل معنا</h4>
+        <ul>
+          <li><a href="tel:+201147253612">📞 01147253612</a></li>
+          <li><a href="https://wa.me/201146849130" target="_blank" rel="noopener">💬 واتساب: 01146849130</a></li>
+          <li><a href="https://www.instagram.com/touchmed1" target="_blank" rel="noopener">📷 touchmed1</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 تاتش ميد — Touch Med. جميع الحقوق محفوظة.</span>
+      <span>شارع القصر العيني، القاهرة، مصر</span>
+    </div>
+  </div>
+</footer>
+
+<!-- floating whatsapp -->
+<a class="wa-float" href="https://wa.me/201146849130" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.2c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.2.3-.3.5l-.5.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.3.1 1.6.7 1.8.9.3.1.4.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<script>
+/* ============ THEME TOGGLE (with graceful persistence) ============ */
+const root=document.documentElement, tBtn=document.getElementById('themeBtn');
+function setTheme(t){
+  root.setAttribute('data-theme',t);
+  tBtn.textContent = t==='dark' ? '☀️' : '🌙';
+  try{localStorage.setItem('tm-theme',t)}catch(e){}
+}
+try{
+  const saved=localStorage.getItem('tm-theme');
+  if(saved){setTheme(saved)}
+  else if(window.matchMedia('(prefers-color-scheme: dark)').matches){setTheme('dark')}
+}catch(e){}
+tBtn.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+/* ============ SCROLL REVEAL ============ */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{ if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target);} });
+},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv,.rv-r,.rv-l,.rv-scale').forEach(el=>io.observe(el));
+
+/* ============ COUNTERS ============ */
+const cio=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(!en.isIntersecting)return;
+    const el=en.target,target=+el.dataset.count,dur=1600,t0=performance.now();
+    (function tick(now){
+      const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*e);
+      if(p<1)requestAnimationFrame(tick);
+    })(t0);
+    cio.unobserve(el);
+  });
+},{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+
+/* ============ SCROLL PROGRESS BAR ============ */
+const pbar=document.getElementById('pbar');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  pbar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+},{passive:true});
+
+/* ============ PRODUCTS: fetch products.json and render ============ */
+(function(){
+  const grid=document.getElementById('prodGrid');
+  const filters=document.getElementById('prodFilters');
+  let allProducts=[];
+
+  function waLink(p){
+    const msg=encodeURIComponent(`السلام عليكم، عايز أسأل عن: ${p.name}`);
+    return `https://wa.me/201146849130?text=${msg}`;
+  }
+
+  function render(list){
+    if(!list.length){
+      grid.innerHTML='<div class="prod-empty">مفيش منتجات في القسم ده حالياً.</div>';
+      return;
+    }
+    grid.innerHTML=list.map(p=>`
+      <article class="p-card rv">
+        <div class="p-thumb">
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : '🩺'}
+          ${p.featured ? '<span class="p-badge">مميز</span>' : ''}
+        </div>
+        <div class="p-body">
+          <span class="p-cat">${p.category||''}</span>
+          <h3 class="p-name">${p.name}</h3>
+          <p class="p-desc">${p.desc||''}</p>
+          <div class="p-foot">
+            <span class="p-price">${p.price?p.price+' <span>ج.م</span>':''}</span>
+            <a class="p-order" href="${waLink(p)}" target="_blank" rel="noopener">اطلب الآن</a>
+          </div>
+        </div>
+      </article>`).join('');
+    grid.querySelectorAll('.rv').forEach(el=>{el.classList.add('in')}); // already-in-view cards
+  }
+
+  function buildFilters(list){
+    const cats=['الكل',...new Set(list.map(p=>p.category).filter(Boolean))];
+    filters.innerHTML=cats.map((c,i)=>`<button class="pf-btn${i===0?' active':''}" data-cat="${c}">${c}</button>`).join('');
+    filters.querySelectorAll('.pf-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        filters.querySelectorAll('.pf-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const c=btn.dataset.cat;
+        render(c==='الكل'?allProducts:allProducts.filter(p=>p.category===c));
+      });
+    });
+  }
+
+  fetch('products.json?_=' + Date.now())
+    .then(r=>r.json())
+    .then(data=>{
+      allProducts=Array.isArray(data)?data:[];
+      buildFilters(allProducts);
+      render(allProducts);
+    })
+    .catch(()=>{
+      grid.innerHTML='<div class="prod-empty">تعذر تحميل المنتجات. تأكد إن ملف products.json موجود بجانب الصفحة.</div>';
+    });
+})();
+
+/* ============ MARQUEE: duplicate content for seamless loop ============ */
+const mq=document.getElementById('marquee');
+mq.innerHTML+=mq.innerHTML;
+
+/* ============ SUBTLE PARALLAX ON HERO BLOBS ============ */
+addEventListener('scroll',()=>{
+  const y=scrollY;
+  document.querySelectorAll('.blob-1').forEach(b=>b.style.transform=`translateY(${y*.18}px)`);
+  document.querySelectorAll('.blob-2').forEach(b=>b.style.transform=`translateY(${y*-.12}px)`);
+},{passive:true});
+</script>
+</body>
+</html>
